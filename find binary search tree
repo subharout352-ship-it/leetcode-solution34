@@ -1,0 +1,29 @@
+class Solution(object):
+    def findMode(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: List[int]
+        """
+        if not root:
+            return []
+
+        from collections import Counter
+
+        count = Counter()
+
+        def inorder(node):
+            if not node:
+                return
+
+            inorder(node.left)
+            count[node.val] += 1
+            inorder(node.right)
+
+        inorder(root)
+
+        max_count = max(count.values())
+
+        result = [key for key, value in count.items()
+                  if value == max_count]
+
+        return result
